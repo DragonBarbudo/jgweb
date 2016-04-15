@@ -1,0 +1,42 @@
+
+<ons-page ng-controller="PortadaCtrl" class="portada sub">
+  <ons-toolbar>
+    <div class="left">
+      <ons-back-button>Atras</ons-back-button>
+    </div>
+    <!--.center: img(src="app/img/jagergin_typo.svg").centralLogo-->
+    <div class="right">
+      <ons-toolbar-button ng-click="Navigator.pushPage('app/view/busqueda.html')">
+        <ons-icon icon="ion-android-search"></ons-icon>
+      </ons-toolbar-button>
+      <!--ons-toolbar-button(ng-click="menu.setMainPage('app/view/carrito.html')"): ons-icon(icon="ion-ios-cart-outline", ng-class="{'active-cart': cartCount > 0}", data="{{cartCount}}")-->
+      <ons-toolbar-button ng-click="Navigator.pushPage('app/view/carrito.html')">
+        <ons-icon icon="ion-ios-cart-outline" ng-class="{'active-cart': cartCount &gt; 0}" data="{{cartCount}}"></ons-icon>
+      </ons-toolbar-button>
+    </div>
+  </ons-toolbar>
+  <ons-row>
+    <ons-col class="subheaderimg subcat"></ons-col>
+  </ons-row>
+  <div class="categoriesGrid">
+    <ons-row class="categories">
+      <ons-col ng-repeat="cat in categoriesList | filter : { description : '!0' } | orderBy:'name' " ng-click="categoryOpen(cat.id, cat.name)" width="50%" class="subcats">
+        <div class="tb">
+          <div class="cell"> 
+            <div class="text">
+              <svg-snap path="app/img/icon_{{ rSpace(cat.name) }}.svg" class="icon_{{ rSpace(cat.name) }}"></svg-snap><span>{{cat.name}}</span>
+            </div>
+          </div>
+        </div>
+      </ons-col>
+    </ons-row>
+  </div>
+  <div class="wavesContainer">
+    <ul class="waves">
+      <!--li.layer(data-depth="1.0"): img(src="app/img/wave_ice.png").t-->
+      <li data-depth="0.9" class="layer"><img src="app/img/wave_3.png" class="w"/></li>
+      <li data-depth="0.5" class="layer"><img src="app/img/wave_1.png" class="w"/></li>
+      <li data-depth="0.7" class="layer"><img src="app/img/wave_2.png" class="w"/></li>
+    </ul>
+  </div>
+</ons-page>

@@ -1,0 +1,76 @@
+
+<ons-navigator var="Navigator"> 
+  <ons-page ng-controller="PortadaCtrl" class="portada">
+    <ons-toolbar>
+      <!--.left: ons-toolbar-button(ng-click="menu.toggleMenu()"): ons-icon(icon="ion-navicon")-->
+      <!--.center: img(src="app/img/jagergin_typo.svg").centralLogo-->
+      <div class="right">
+        <ons-toolbar-button ng-click="Navigator.pushPage('app/view/busqueda.html')">
+          <ons-icon icon="ion-android-search"></ons-icon>
+        </ons-toolbar-button>
+        <!--ons-toolbar-button(ng-click="menu.setMainPage('app/view/carrito.html')"): ons-icon(icon="ion-ios-cart-outline", ng-class="{'active-cart': cartCount > 0}", data="{{cartCount}}")-->
+        <ons-toolbar-button ng-click="Navigator.pushPage('app/view/carrito.html')">
+          <ons-icon icon="ion-ios-cart-outline" ng-class="{'active-cart': cartCount &gt; 0}" data="{{cartCount}}"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+    </ons-toolbar>
+    <slick infinit="true" lazy-load="ondemand" autoplay="true" arrows="false" class="portadaSlider">
+      <div><img ng-src="app/img/promo1.png" alt=""/></div>
+      <div><img ng-src="app/img/promo2.png" alt=""/></div>
+    </slick>
+    <ons-row ng-click="scrollBottom()">
+      <ons-col class="primaryPhrase">Haz tu pedido</ons-col>
+    </ons-row>
+    <ons-row ng-click="scrollBottom()">
+      <ons-col class="bottomArrow">
+        <ons-icon icon="ion-chevron-down"></ons-icon>
+      </ons-col>
+    </ons-row>
+    <div id="thebottom" class="categoriesGrid">
+      <ons-row class="categories">
+        <ons-col ng-repeat="cat in categoriesList | filter : { description : 0 } | orderBy: 'order'" ng-click="categoryOpen(cat.id, cat.name, cat.parent);" width="31%">
+          <div class="tb">
+            <div class="cell">
+              <div class="icon">
+                <svg-snap path="app/img/icon_{{ rSpace(cat.name) }}.svg"></svg-snap>
+              </div>
+              <div class="text">{{cat.name}}</div>
+            </div>
+          </div>
+        </ons-col>
+      </ons-row>
+    </div>
+    <div class="wavesContainer">
+      <ul class="waves">
+        <!--li.layer(data-depth="1.0"): img(src="app/img/wave_ice.png").t-->
+        <li data-depth="0.9" class="layer"><img src="app/img/wave_3.png" class="w"/></li>
+        <li data-depth="0.5" class="layer"><img src="app/img/wave_1.png" class="w"/></li>
+        <li data-depth="0.7" class="layer"><img src="app/img/wave_2.png" class="w"/></li>
+      </ul>
+    </div>
+    <div ng-hide="zona" class="zonaJagergin">
+      <ons-row>
+        <ons-col class="inst">
+          <h2>Zona de cobertura JagerGin</h2>
+          <p>Podemos entregar tu pedido si tu fiesta esta dentro de la zona marcada.</p>
+        </ons-col>
+      </ons-row>
+      <ons-row>
+        <ons-col>
+          <div class="notesAboutIntroMap"><img ng-src="app/img/icon_marker.png"/><span ng-show="isInZone">Estas en la zona JagerGin</span><span ng-hide="isInZone">No estas en la zona JagerGin</span></div>
+          <!--.notesAboutZonaJagergin
+          .zona
+          span Zona JagerGin
+          -->
+          <ui-gmap-google-map control="map.control" options="map.options" center="map.center" zoom="map.zoom" events="map.events">
+            <ui-gmap-polygon ng-repeat="p in polygons track by p.id" path="p.path" stroke="p.stroke" fill="p.fill"></ui-gmap-polygon>
+            <ui-gmap-marker ng-repeat="m in marker track by m.id" coords="m.coords" options="m.options" idkey="m.id"></ui-gmap-marker>
+            <!--ui-gmap-polyline(ng-repeat="p in polygons track by p.id", path="p.path", stroke="p.stroke", editable="true", draggable="true" , geodesic="true")-->
+          </ui-gmap-google-map>
+        </ons-col>
+      </ons-row>
+      <ons-button ng-click="okZone()" ng-show="isInZone">Aceptar</ons-button>
+      <ons-button ng-click="okZone()" ng-hide="isInZone">Mi fiesta es en otro lugar.</ons-button>
+    </div>
+  </ons-page>
+</ons-navigator>

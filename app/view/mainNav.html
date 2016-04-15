@@ -1,0 +1,24 @@
+
+<!--ons-sliding-menu(var="menu" main-page="app/view/portada.html", menu-page="menu.html", side="left", max-slide-distance="75%", type="reveal", swipe-target-width="40%")-->
+<ons-split-view var="menu" main-page="app/view/portada.html" secondary-page="menu.html" main-page-width="75%" collapse="portrait"></ons-split-view>
+<ons-template id="menu.html">
+  <ons-page ng-controller="mainNavCtrl">
+    <ons-list class="mainNav">
+      <ons-list-item class="tac"><img ng-src="app/img/jagergin.svg" class="jagerginmenu"/></ons-list-item>
+      <ons-list-item ng-click="menu.setMainPage('app/view/portada.html')" modifier="tappable"><span class="icon-action">
+          <ons-icon icon="ion-android-bar"></ons-icon></span> Haz tu pedido</ons-list-item>
+      <ons-list-item ng-repeat="cat in categoriesList | filter : { description : 0 } | orderBy: 'order'" ng-click="categoryOpen(cat.id, cat.name, cat.parent);" class="itemCategory"><span class="icon-action">
+          <svg-snap path="app/img/icon_{{ rSpace(cat.name) }}.svg"></svg-snap></span>{{cat.name}}</ons-list-item>
+      <ons-list-item ng-click="Navigator.replacePage('app/view/busqueda.html')" modifier="tappable" class="itemCategory searchearNav"><span class="icon-action">
+          <ons-icon icon="ion-search"></ons-icon></span> Buscar producto</ons-list-item>
+      <ons-list-item ng-click="Navigator.replacePage('app/view/carrito.html')" modifier="tappable"><span class="icon-action">
+          <ons-icon icon="ion-ios-cart-outline"></ons-icon></span> Carrito</ons-list-item>
+      <ons-list-item ng-click="menu.setMainPage('app/view/cuenta.html')"><span class="icon-action">
+          <ons-icon icon="ion-person"></ons-icon></span><span ng-hide="loggedin">Tu cuenta</span><span ng-show="loggedin">{{userApp.name}}</span></ons-list-item>
+      <ons-list-item ng-click="menu.setMainPage('app/view/acerca.html')"><span class="icon-action">
+          <ons-icon icon="ion-ios-help-outline"></ons-icon></span> Sobre JagerGin</ons-list-item>
+      <ons-list-item ng-click="logout()" ng-controller="CuentaCtrl" ng-show="loggedin"><span class="icon-action">
+          <ons-icon icon="ion-log-out"></ons-icon></span> Cerrar sesión</ons-list-item>
+    </ons-list>
+  </ons-page>
+</ons-template>

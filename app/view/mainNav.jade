@@ -1,0 +1,33 @@
+//ons-sliding-menu(var="menu" main-page="app/view/portada.html", menu-page="menu.html", side="left", max-slide-distance="75%", type="reveal", swipe-target-width="40%")
+ons-split-view(var="menu" main-page="app/view/portada.html", secondary-page="menu.html", main-page-width="75%", collapse="portrait")
+
+
+ons-template(id="menu.html")
+  ons-page(ng-controller="mainNavCtrl")
+    
+    ons-list.mainNav
+      ons-list-item.tac: img(ng-src="app/img/jagergin.svg").jagerginmenu
+      ons-list-item(ng-click="menu.setMainPage('app/view/portada.html')", modifier="tappable")
+        span.icon-action: ons-icon(icon="ion-android-bar")
+        |  Haz tu pedido
+        
+      ons-list-item(ng-repeat="cat in categoriesList | filter : { description : 0 } | orderBy: 'order'", ng-click="categoryOpen(cat.id, cat.name, cat.parent);").itemCategory
+        span.icon-action: svg-snap(path="app/img/icon_{{ rSpace(cat.name) }}.svg")
+        | {{cat.name}}
+      
+      ons-list-item(ng-click="Navigator.replacePage('app/view/busqueda.html')", modifier="tappable").itemCategory.searchearNav
+        span.icon-action: ons-icon(icon="ion-search")
+        |  Buscar producto
+      ons-list-item(ng-click="Navigator.replacePage('app/view/carrito.html')", modifier="tappable")
+        span.icon-action: ons-icon(icon="ion-ios-cart-outline")
+        |  Carrito
+      ons-list-item(ng-click="menu.setMainPage('app/view/cuenta.html')")
+        span.icon-action: ons-icon(icon="ion-person")
+        span(ng-hide="loggedin") Tu cuenta
+        span(ng-show="loggedin") {{userApp.name}}
+      ons-list-item(ng-click="menu.setMainPage('app/view/acerca.html')")
+        span.icon-action: ons-icon(icon="ion-ios-help-outline")
+        |  Sobre JagerGin
+      ons-list-item(ng-click="logout()", ng-controller="CuentaCtrl", ng-show="loggedin")
+        span.icon-action: ons-icon(icon="ion-log-out")
+        |  Cerrar sesión
